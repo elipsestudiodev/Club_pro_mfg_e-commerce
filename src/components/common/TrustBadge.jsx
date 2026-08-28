@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import { API_HOST } from "../../utils/api";
 
-const API_BASE_URL = "https://api.clubpromfg.com";
+const API_BASE_URL = API_HOST;
 
 // src/components/common/TrustBadge.jsx
 export default function TrustBadge({ title, value, link, imageUrl }) {

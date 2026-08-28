@@ -1,7 +1,7 @@
 // src/components/home/TopCategoriesGrid.jsx
 import { useState, useEffect } from "react";
 import CategoryItem from "../common/CategoryItem";
-import { BASE_API } from "../../utils/api";
+import { BASE_API, API_HOST } from "../../utils/api";
 
 export default function TopCategoriesGrid() {
   const [brands, setBrands] = useState([]);
@@ -81,7 +81,7 @@ export default function TopCategoriesGrid() {
               >
                 <CategoryItem
                   name={brand.name}
-                  logo={`https://api.clubpromfg.com${brand.logo}`}
+                  logo={`${API_HOST}${brand.logo}`}
                   imgAlt={brand.imgAlt}
                   models={brand.models || []}
                   variant="grid"

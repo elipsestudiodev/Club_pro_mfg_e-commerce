@@ -1,7 +1,7 @@
 // src/components/home/CategorySidebar.jsx
 import { useState, useEffect } from "react";
 import CategoryItem from "../common/CategoryItem";
-import { BASE_API } from "../../utils/api";
+import { BASE_API, API_HOST } from "../../utils/api";
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 
@@ -99,7 +99,7 @@ export default function CategorySidebar() {
             <li key={brand.id}>
               <CategoryItem
                 name={brand.name}
-                logo={`https://api.clubpromfg.com${brand.logo}`}
+                logo={`${API_HOST}${brand.logo}`}
                 imgAlt={brand.imgAlt}
                 path={brand.path}
                 models={brand.models || []} // ← pass models array!
@@ -111,7 +111,7 @@ export default function CategorySidebar() {
         {/* <UtilitySidebar /> */}
         <StaticCategoryItem
           name={utilityBrand.name}
-          logo={`https://api.clubpromfg.com${utilityBrand.logo}`}
+          logo={`${API_HOST}${utilityBrand.logo}`}
           imgAlt={utilityBrand.imgAlt}
           path={utilityBrand.path}
           models={utilityBrand.models || []} // ← pass models array!

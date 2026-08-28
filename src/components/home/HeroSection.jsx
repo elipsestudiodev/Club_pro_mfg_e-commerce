@@ -138,7 +138,7 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { api, BASE_API, BASE_URL } from "../../utils/api";
+import { api, BASE_API, BASE_URL, API_HOST } from "../../utils/api";
 
 const DEFAULT_SLIDES = [
   {
@@ -226,7 +226,7 @@ export default function HeroSection() {
             }`}
         >
           <img
-            src={`https://api.clubpromfg.com${slide.imageUrl}`}
+            src={`${API_HOST}${slide.imageUrl}`}
             alt={slide.imgAlt || slide.title}
             className="w-full h-full object-cover"
           />

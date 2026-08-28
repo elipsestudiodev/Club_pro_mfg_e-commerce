@@ -6,7 +6,7 @@ import {
   SlidersHorizontal,
   ChevronDown,
 } from "lucide-react";
-import { BASE_API } from "../utils/api";
+import { BASE_API, API_HOST } from "../utils/api";
 import SEO from "../components/common/SEO";
 
 const utilityBrand = {
@@ -344,7 +344,7 @@ export default function ShopCategory() {
                   <Link key={product.id} to={`/product/${product.slug || product.id}`} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition border border-gray-200 group">
                     <div className="relative w-full aspect-square overflow-hidden">
                       <img
-                        src={`https://api.clubpromfg.com/uploads/products/${product.imageOne || "placeholder.jpg"}`}
+                        src={`${API_HOST}/uploads/products/${product.imageOne || "placeholder.jpg"}`}
                         alt={product.imgAltOne || product.seoTitle || product.name}
                         className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform"
                       />

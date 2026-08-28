@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { BASE_API } from "../utils/api";
+import { BASE_API, API_HOST } from "../utils/api";
 import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import SEO from "../components/common/SEO";
@@ -136,7 +136,7 @@ export default function ProductDetail() {
               <div className="w-full bg-white p-10 flex justify-center items-center h-[350px] md:h-[580px] lg:h-[650px] transition-all duration-300">
 
                 <img
-                  src={`https://api.clubpromfg.com/uploads/products/${images[activeImage]}`}
+                  src={`${API_HOST}/uploads/products/${images[activeImage]}`}
                   alt={altTexts[activeImage] || product.seoTitle || product.name}
                   className="max-w-full max-h-full object-contain"
                 />
@@ -189,7 +189,7 @@ export default function ProductDetail() {
                       }`}
                   >
                     <img
-                      src={`https://api.clubpromfg.com/uploads/products/${img}`}
+                      src={`${API_HOST}/uploads/products/${img}`}
                       alt={altTexts[index] || `${product.seoTitle || product.name} thumbnail ${index + 1}`}
                       className="w-full h-full object-cover"
                     />
@@ -214,7 +214,7 @@ export default function ProductDetail() {
                           }`}
                       >
                         <img
-                          src={`https://api.clubpromfg.com/uploads/products/${img}`}
+                          src={`${API_HOST}/uploads/products/${img}`}
                           alt={
                             altTexts[index] ||
                             `${product.seoTitle || product.name} thumbnail ${index + 1}`
@@ -229,7 +229,7 @@ export default function ProductDetail() {
               <div className="flex-1 flex justify-center items-center bg-white p-10 h-[350px] md:h-[580px] lg:h-[650px] transition-all duration-300 relative">
 
                 <img
-                  src={`https://api.clubpromfg.com/uploads/products/${images[activeImage]}`}
+                  src={`${API_HOST}/uploads/products/${images[activeImage]}`}
                   alt={altTexts[activeImage] || product.seoTitle || product.name}
                   className="max-w-full max-h-full object-contain"
                 />
@@ -351,7 +351,7 @@ export default function ProductDetail() {
                   id: product.id,
                   name: product.name,
                   price: priceToUse,
-                  image: `https://api.clubpromfg.com/uploads/products/${images[0]}`,
+                  image: `${API_HOST}/uploads/products/${images[0]}`,
                   quantity: quantity
                 })
               }}
