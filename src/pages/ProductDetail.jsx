@@ -350,6 +350,7 @@ export default function ProductDetail() {
                 addToCart({
                   id: product.id,
                   name: product.name,
+                  sku: product.sku,
                   price: priceToUse,
                   image: `${API_HOST}/uploads/products/${images[0]}`,
                   quantity: quantity
@@ -370,8 +371,7 @@ export default function ProductDetail() {
               <p>Brand: {product.brand.name}</p>
               <p className="mt-1">Model: {product.model.name}</p>
               <p className="mt-1">Product Type: {product.productType.name}</p>
-
-
+              {product.sku && <p className="mt-1">SKU: {product.sku}</p>}
             </div>
           </div>
         </div>

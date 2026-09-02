@@ -128,6 +128,9 @@ const CheckoutPage = () => {
                     <h3 className="font-medium text-gray-900 text-lg">
                       {item.name}
                     </h3>
+                    <p className="text-sm font-medium text-gray-700 mt-1">
+                      SKU: {item.sku || "N/A"}
+                    </p>
                     <p className="text-sm text-gray-600 mt-1">
                       Unit price: ${price.toFixed(2)}
                     </p>

@@ -351,7 +351,7 @@ export default function ShopCategory() {
                     </div>
                     <div className="p-3 sm:p-4">
                       <h3 className="font-medium text-gray-900 line-clamp-2 md:min-h-[3rem] text-sm sm:text-base">{product.name}</h3>
-                      <div className="text-xs sm:text-sm text-gray-600 mb-2">{product.brand?.name} • {product.model?.name}</div>
+                      <div className="text-xs sm:text-sm text-gray-600 mb-2">{product.brand?.name} • {product.model?.name}{product.sku ? ` • SKU: ${product.sku}` : ""}</div>
                       <div className="text-xl font-bold text-amber-700">
                         ${(product.salePrice && parseFloat(product.salePrice) > 0 ? parseFloat(product.salePrice) : parseFloat(product.regularPrice || 0)).toLocaleString()}
                       </div>
