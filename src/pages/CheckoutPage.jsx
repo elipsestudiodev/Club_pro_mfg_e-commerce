@@ -1,13 +1,13 @@
-// src/pages/CheckoutPage.jsx
 import React from 'react';
 import { useCart } from '../context/CartContext'; // adjust path according to your folder structure
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, Trash2 } from 'lucide-react';
 import { loadStripe } from "@stripe/stripe-js";
 import { BASE_API } from '../utils/api';
 const stripePromise = loadStripe("pk_live_51S0HgIFDBW3pcErGOmI6vsVCXStMih46KJXjrOiFHppAj6h0tHOp4zDYMoLyTQn7Uk99pePatnCFrqLh6AAblGa300Wm8qbiRe");
 
 const CheckoutPage = () => {
+  const navigate = useNavigate();
   const { cartItems, removeFromCart,clearCart } = useCart();
 
   // Safely convert price to number (handles string, number, invalid cases)
@@ -21,63 +21,85 @@ const CheckoutPage = () => {
   }, 0);
 
   const handleStripeCheckout = async () => {
-  const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token');
 
-  if (!token) {
-    alert('Please log in to proceed with checkout');
-    return;
-  }
+    if (!token) {
+      alert('Please log in to proceed with checkout');
+      navigate('/login');
+      return;
+    }
 
-  if (cartItems.length === 0) {
-    alert('Your cart is empty');
-    return;
-  }
+    if (cartItems.length === 0) {
+      alert('Your cart is empty');
+      return;
+    }
 
-  try {
-    const payload = {
-      items: cartItems.map((item) => ({
-        id: item.id,
-        name: item.name,
-        price: getPriceAsNumber(item.price),
-        qty: item.quantity,
-      })),
-    };
+    try {
+      const payload = {
+        items: cartItems.map((item) => ({
+          id: item.id,
+          name: item.name,
+          price: getPriceAsNumber(item.price),
+          qty: item.quantity,
+        })),
+      };
 
-    const response = await fetch(
-      `${BASE_API}/checkout/stripe-session`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(payload),
+      const response = await fetch(
+        `${BASE_API}/checkout/stripe-session`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      if (response.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        alert('Your login session has expired. Please log in again to complete checkout.');
+        navigate('/login');
+        return;
       }
-    );
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(errorText || 'Failed to create Stripe checkout session');
+      if (!response.ok) {
+        let errorMsg = 'Failed to create Stripe checkout session';
+        try {
+          const errorData = await response.json();
+          errorMsg = errorData.message || errorMsg;
+        } catch {
+          const text = await response.text();
+          errorMsg = text || errorMsg;
+        }
+        throw new Error(errorMsg);
+      }
+
+      const data = await response.json();
+
+      if (!data.url) {
+        throw new Error('No checkout URL received from server');
+      }
+
+      // Clear cart right before redirect
+      clearCart();
+
+      // Redirect to Stripe
+      window.location.href = data.url;
+
+    } catch (error) {
+      console.error('Stripe checkout error:', error);
+      if (error.message && (error.message.includes('Invalid token') || error.message.includes('Unauthorized'))) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        alert('Your login session has expired. Please log in again.');
+        navigate('/login');
+        return;
+      }
+      alert(`Checkout failed: ${error.message}`);
     }
-
-    const data = await response.json();
-
-    if (!data.url) {
-      throw new Error('No checkout URL received from server');
-    }
-
-    // ── QUICK SOLUTION ──
-    // Clear cart right before redirect
-    clearCart();
-
-    // Redirect to Stripe
-    window.location.href = data.url;
-
-  } catch (error) {
-    console.error('Stripe checkout error:', error);
-    alert(`Checkout failed: ${error.message}`);
-  }
-};
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
