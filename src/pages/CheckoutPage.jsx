@@ -40,7 +40,8 @@ const CheckoutPage = () => {
           id: item.id,
           name: item.name,
           price: getPriceAsNumber(item.price),
-          qty: item.quantity,
+          qty: Number(item.quantity || item.qty || 1),
+          quantity: Number(item.quantity || item.qty || 1),
         })),
       };
 
