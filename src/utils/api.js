@@ -3,7 +3,9 @@ export const API_HOST = 'http://localhost:5050' // local api host (no /api, /upl
 
 // export const BASE_API='https://api.clubpromfg.com/api'
 export const BASE_API = `${API_HOST}/api`
-export const BASE_URL = 'https://clubpromfg.com'
+// export const BASE_URL = 'https://clubpromfg.com'
+
+export const BASE_URL = 'http://localhost:3000'
 
 async function request(endpoint, options = {}) {
   const response = await fetch(`${BASE_API}${endpoint}`, {
