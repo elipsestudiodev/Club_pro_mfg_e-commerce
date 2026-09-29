@@ -49,3 +49,33 @@
 .glass {
   @apply bg-white/10 backdrop-blur-md border border-white/20;
 }
+
+/* ─── CollectJS (NMI/Dime) iframe border reset ─────────────────────────── */
+/* Collect.js injects iframes for card fields — remove browser default black border */
+#dime-payment-form iframe,
+#collect-ccnumber iframe,
+#collect-ccexp iframe,
+#collect-cvv iframe,
+#ccnumber iframe {
+  border: 0 !important;
+  border-style: none !important;
+  border-width: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  height: 46px !important;
+  display: block !important;
+}
+
+/* Remove focus outline on the iframe itself */
+#dime-payment-form iframe:focus,
+#collect-ccnumber iframe:focus,
+#collect-ccexp iframe:focus,
+#collect-cvv iframe:focus,
+#ccnumber:focus {
+  outline: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
